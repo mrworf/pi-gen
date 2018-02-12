@@ -1,0 +1,6 @@
+In order to enable support for color temperature adjustments,
+you need to download the colortemp script from:
+
+http://www.fmwconcepts.com/imagemagick/colortemp/index.php
+
+and save it to /root/colortemp.sh and make it executable.

@@ -1,0 +1,27 @@
+Index: jessie-stage2/rootfs/boot/config.txt
+===================================================================
+--- jessie-stage2.orig/rootfs/boot/config.txt
++++ jessie-stage2/rootfs/boot/config.txt
+@@ -43,7 +43,7 @@
+ #arm_freq=800
+ 
+ # Uncomment some or all of these to enable the optional hardware interfaces
+-#dtparam=i2c_arm=on
++dtparam=i2c_arm=on
+ #dtparam=i2s=on
+ #dtparam=spi=on
+ 
+@@ -52,5 +52,11 @@
+ 
+ # Additional overlays and parameters are documented /boot/overlays/README
+ 
+-# Enable audio (loads snd_bcm2835)
+-dtparam=audio=on
++# Uncomment to enable audio (loads snd_bcm2835)
++#dtparam=audio=on
++
++# Make sure screen is blank during boot
++disable_splash=1
++
++# Also allow 32bit framebuffer
++framebuffer_ignore_alpha=1

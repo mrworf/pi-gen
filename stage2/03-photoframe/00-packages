@@ -1,0 +1,11 @@
+apt-utils 
+raspi-config 
+git 
+fbset
+python
+python-requests
+python-requests-oauthlib
+python-flask
+imagemagick
+python-smbus
+bc
