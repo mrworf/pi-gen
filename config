@@ -1,3 +1,5 @@
 IMG_NAME='PHOTOFRAME'
-
+if [ -f config.local ]; then
+	source config.local
+fi
 

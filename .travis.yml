@@ -1,4 +1,10 @@
-language: python
+language: bash
 install:
-  - sudo apt-get install quilt parted realpath qemu-user-static debootstrap zerofree pxz zip dosfstools bsdtar libcap2-bin grep rsync xz-utils
+- sudo apt-get install quilt parted realpath qemu-user-static debootstrap zerofree
+  pxz zip dosfstools bsdtar libcap2-bin grep rsync xz-utils
 script: sudo ./build.sh
+after_success:
+  - mkdir image
+  - cp bla image/
+  - gzip image/bla
+

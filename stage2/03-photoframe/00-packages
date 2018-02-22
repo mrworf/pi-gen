@@ -6,6 +6,9 @@ python
 python-requests
 python-requests-oauthlib
 python-flask
+python-flask-httpauth
 imagemagick
 python-smbus
 bc
+openssh-server
+
