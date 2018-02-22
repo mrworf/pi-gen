@@ -1,3 +1,4 @@
+config.local
 deploy/*
 work/*
 postrun.sh
