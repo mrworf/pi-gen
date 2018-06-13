@@ -1,4 +1,6 @@
 IMG_NAME='PHOTOFRAME'
+PHOTOFRAME_BRANCH=master
+
 if [ -f config.local ]; then
 	source config.local
 fi

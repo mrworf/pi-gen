@@ -16,7 +16,7 @@ install -m 644 files/http-auth.json ${ROOTFS_DIR}/boot/http-auth.json
 rm ${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/wait.conf
 
 # Cannot be run with QEMU since it will hang
-git clone -v https://github.com/mrworf/photoframe.git ${ROOTFS_DIR}/root/photoframe
+git clone -v -b ${PHOTOFRAME_BRANCH} https://github.com/mrworf/photoframe.git ${ROOTFS_DIR}/root/photoframe
 
 on_chroot << EOF
 echo "done git cloning"
