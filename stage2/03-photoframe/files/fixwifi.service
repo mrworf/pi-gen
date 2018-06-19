@@ -1,0 +1,12 @@
+[Unit]
+Description=Workaround for when WiFi fails during boot
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=idle
+RemainAfterExit=true
+ExecStart=/root/fix_wifi.sh
+
+

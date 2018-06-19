@@ -6,11 +6,18 @@ systemctl disable getty@tty1.service
 systemctl mask plymouth-start.service
 EOF
 
+# Create config folder
+mkdir ${ROOTFS_DIR}/root/photoframe_config
+
 # Add info files
-install -m 644 files/colortemp_info.txt ${ROOTFS_DIR}/root/colortemp_info.txt
+install -m 644 files/colortemp_info.txt ${ROOTFS_DIR}/root/photoframe_config/colortemp_info.txt
 
 # Add default authentication
 install -m 644 files/http-auth.json ${ROOTFS_DIR}/boot/http-auth.json
+
+# Add fix_wifi.sh for when wpa_supplicant fails
+install -m 755 files/fix_wifi.sh ${ROOTFS_DIR}/root/fix_wifi.sh
+install -m 644 files/fixwifi.service ${ROOTFS_DIR}/etc/systemd/system/
 
 # Remove wait on network
 rm ${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/wait.conf
@@ -19,13 +26,13 @@ rm ${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/wait.conf
 git clone -v -b ${PHOTOFRAME_BRANCH} https://github.com/mrworf/photoframe.git ${ROOTFS_DIR}/root/photoframe
 
 on_chroot << EOF
-echo "done git cloning"
 cd /root/photoframe
-echo "cd"
 cp frame.service /etc/systemd/system/
-echo "copy"
 systemctl enable /etc/systemd/system/frame.service
-echo "systemctl"
+
+# Also enable the fixwifi
+systemctl enable /etc/systemd/system/fixwifi.service
+
 # Enable auto update
 echo >>/etc/crontab "15 3    * * *   root    /root/photoframe/update.sh"
 
