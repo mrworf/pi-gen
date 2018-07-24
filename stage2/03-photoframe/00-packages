@@ -11,4 +11,5 @@ imagemagick
 python-smbus
 bc
 openssh-server
+rng-tools
 
