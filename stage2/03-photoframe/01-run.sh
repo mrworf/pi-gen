@@ -22,8 +22,19 @@ install -m 644 files/fixwifi.service ${ROOTFS_DIR}/etc/systemd/system/
 # Remove wait on network
 rm ${ROOTFS_DIR}/etc/systemd/system/dhcpcd.service.d/wait.conf
 
-# Cannot be run with QEMU since it will hang
-git clone -v -b ${PHOTOFRAME_BRANCH} https://github.com/mrworf/photoframe.git ${ROOTFS_DIR}/root/photoframe
+# If this directory doesn't exist, clone a branch of it
+if [ "${PHOTOFRAME_SRC}" = "" ]; then
+  # Cannot be run with QEMU since it will hang
+  git clone -v -b ${PHOTOFRAME_BRANCH} https://github.com/mrworf/photoframe.git ${ROOTFS_DIR}/root/photoframe
+else
+  echo "Using ${PHOTOFRAME_SRC} as the basis for the photoframe software"
+  mkdir -p ${ROOTFS_DIR}/root/photoframe
+  for X in ${PHOTOFRAME_SRC} ; do
+    if [[ "$X" != */pi-gen ]]; then
+      cp -dprv "$X" ${ROOTFS_DIR}/root/photoframe/
+    fi
+  done
+fi
 
 on_chroot << EOF
 cd /root/photoframe
