@@ -31,7 +31,7 @@ else
   mkdir -p ${ROOTFS_DIR}/root/photoframe
   for X in $(ls -A1 ${PHOTOFRAME_SRC}) ; do
     if [[ "$X" != */pi-gen ]]; then
-      cp -dprv "$X" ${ROOTFS_DIR}/root/photoframe/
+      cp -dprv "${PHOTOFRAME_SRC}/$X" ${ROOTFS_DIR}/root/photoframe/
     fi
   done
 fi
