@@ -187,9 +187,6 @@ export QUILT_REFRESH_ARGS="-p ab"
 export PHOTOFRAME_BRANCH
 export PHOTOFRAME_SRC
 
-sudo apt show -a debootstrap
-exit 1
-
 # shellcheck source=scripts/common
 source "${SCRIPT_DIR}/common"
 # shellcheck source=scripts/dependencies_check
