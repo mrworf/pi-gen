@@ -13,7 +13,7 @@ To install the required dependencies for pi-gen you should run:
 
 ```bash
 apt-get install quilt parted realpath qemu-user-static debootstrap zerofree pxz zip \
-dosfstools bsdtar libcap2-bin grep rsync xz-utils
+dosfstools bsdtar libcap2-bin grep rsync xz-utils file git curl
 ```
 
 The file `depends` contains a list of tools needed.  The format of this
@@ -73,6 +73,21 @@ The following environment variables are supported:
    Setting to '1' enables the QEMU mode - creating an image that can be mounted via QEMU for an emulated
    environment. These images include "-qemu" in the image file name.
 
+ * `FIRST_USER_NAME` (Default: "pi" )
+
+   Username for the first user
+
+ * `FIRST_USER_PASS` (Default: "raspberry")
+
+   Password for the first user
+
+ * `WPA_ESSID`, `WPA_PASSWORD` and `WPA_COUNTRY` (Default: unset)
+
+   If these are set, they are use to configure `wpa_supplicant.conf`, so that the raspberry pi can automatically connect to a wifi network on first boot.
+
+ * `ENABLE_SSH` (Default: `0`)
+
+   Setting to `1` will enable ssh server for remote log in. Note that if you are using a common password such as the defaults there is a high risk of attackers taking over you RaspberryPi.
 
 A simple example for building Raspbian:
 
@@ -80,6 +95,13 @@ A simple example for building Raspbian:
 IMG_NAME='Raspbian'
 ```
 
+The config file can also be specified on the command line as an argument the `build.sh` or `build-docker.sh` scripts.
+
+```
+./build -c myconfig
+```
+
+This is parsed after `config` so can be used to override values set there.
 
 ## How the build process works
 
@@ -249,3 +271,26 @@ follows:
  * Once you're happy with the image you can remove the SKIP_IMAGES files and
    export your image to test
 
+# Troubleshooting
+
+## `binfmt_misc`
+
+Linux is able execute binaries from other architectures, meaning that it should be
+possible to make use of `pi-gen` on an x86_64 system, even though it will be running
+ARM binaries. This requires support from the [`binfmt_misc`](https://en.wikipedia.org/wiki/Binfmt_misc)
+kernel module.
+
+You may see the following error:
+
+```
+update-binfmts: warning: Couldn't load the binfmt_misc module.
+```
+
+To resolve this, ensure that the following files are available (install them if necessary):
+
+```
+/lib/modules/$(uname -r)/kernel/fs/binfmt_misc.ko
+/usr/bin/qemu-arm-static
+```
+
+You may also need to load the module by hand - run `modprobe binfmt_misc`.

@@ -127,6 +127,16 @@ if [ -f config ]; then
 	source config
 fi
 
+while getopts "c:" flag
+do
+	case "$flag" in
+		c)
+			EXTRA_CONFIG="$OPTARG"
+			source "$EXTRA_CONFIG"
+			;;
+	esac
+done
+
 if [ -z "${IMG_NAME}" ]; then
 	echo "IMG_NAME not set" 1>&2
 	exit 1
@@ -134,12 +144,21 @@ fi
 
 export USE_QEMU="${USE_QEMU:-0}"
 export IMG_DATE="${IMG_DATE:-"$(date +%Y-%m-%d)"}"
+export IMG_FILENAME="${IMG_FILENAME:-"${IMG_DATE}-${IMG_NAME}${IMG_SUFFIX}"}"
+export ZIP_FILENAME="${ZIP_FILENAME:-"image_${IMG_DATE}-${IMG_NAME}${IMG_SUFFIX}"}"
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export SCRIPT_DIR="${BASE_DIR}/scripts"
 export WORK_DIR="${WORK_DIR:-"${BASE_DIR}/work/${IMG_DATE}-${IMG_NAME}"}"
 export DEPLOY_DIR=${DEPLOY_DIR:-"${BASE_DIR}/deploy"}
 export LOG_FILE="${WORK_DIR}/build.log"
+
+export FIRST_USER_NAME=${FIRST_USER_NAME:-pi}
+export FIRST_USER_PASS=${FIRST_USER_PASS:-raspberry}
+export WPA_ESSID
+export WPA_PASSWORD
+export WPA_COUNTRY
+export ENABLE_SSH="${ENABLE_SSH:-0}"
 
 export BASE_DIR
 
