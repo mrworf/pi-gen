@@ -30,7 +30,7 @@ else
   echo "Using ${PHOTOFRAME_SRC} as the basis for the photoframe software"
   mkdir -p ${ROOTFS_DIR}/root/photoframe
   for X in $(ls -A1 ${PHOTOFRAME_SRC}) ; do
-    if [[ "$X" != */pi-gen ]]; then
+    if [[ "$X" != *pi-gen ]]; then
       cp -dprv "${PHOTOFRAME_SRC}/$X" ${ROOTFS_DIR}/root/photoframe/
     fi
   done
