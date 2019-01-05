@@ -32,6 +32,10 @@ else
   for X in $(ls -A1 ${PHOTOFRAME_SRC}) ; do
     if [[ "$X" != *pi-gen ]]; then
       cp -dprv "${PHOTOFRAME_SRC}/$X" ${ROOTFS_DIR}/root/photoframe/
+      # Make sure we're on an actual BRANCH
+      pushd ${ROOTFS_DIR}/root/photoframe/
+      git checkout ${PHOTOFRAME_BRANCH}
+      popd
     fi
   done
 fi
